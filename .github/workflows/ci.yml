@@ -26,4 +26,4 @@ jobs:
             php artisan key:generate
 
       - name: Run Tests
-        run: php artisan test --coverage
+        run: php artisan test --coverage --min=90
