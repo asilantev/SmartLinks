@@ -1,7 +1,7 @@
 services:
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.3
+            context: ./docker
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -21,6 +21,7 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+            - smartlinkkafka_default
         depends_on:
             - mysql
             - redis
@@ -100,25 +101,19 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
-    kafka:
-        image: 'bitnami/kafka:latest'
+    adminer:
+        image: adminer
+        links:
+            - mysql
         ports:
-            - '${FORWARD_KAFKA_PORT:-9092}:9092'
-        environment:
-            - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-            - ALLOW_PLAINTEXT_LISTENER=yes
-        depends_on:
-            - zookeeper
-
-    zookeeper:
-        image: 'bitnami/zookeeper:latest'
-        ports:
-            - '${FORWARD_ZOOKEEPER_PORT:-2181}:2181'
-        environment:
-            - ALLOW_ANONYMOUS_LOGIN=yes
+            - '8090:8080'
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
+    smartlinkkafka_default:
+        external: true
 volumes:
     sail-mysql:
         driver: local

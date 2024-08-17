@@ -9,7 +9,7 @@ class RedirectRule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['smart_link_id', 'target_url', 'priority', 'is_active'];
+    protected $fillable = ['smart_link_id', 'target_url', 'priority', 'is_active', 'external_id'];
 
     public function smartLink()
     {

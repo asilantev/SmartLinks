@@ -9,7 +9,7 @@ class SmartLink extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slug', 'default_url', 'expires_at'];
+    protected $fillable = ['slug', 'default_url', 'expires_at', 'external_id'];
     protected $dates = ['expires_at'];
 
     public function redirectRules()

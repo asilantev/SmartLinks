@@ -9,7 +9,7 @@ class ConditionType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code', 'name'];
+    protected $fillable = ['code', 'name', 'external_id'];
 
     public function conditions()
     {

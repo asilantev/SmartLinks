@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('rule_conditions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rule_id')->constrained('redirect_rules')->onDelete('cascade');
-            //$table->enum('condition_type_id', array_map(fn(UnitEnum $case) => $case->value, \App\Impl\ConditionType::cases()));
             $table->foreignId('condition_type_id')->constrained('condition_types');
             $table->json('condition_value');
         });

@@ -9,7 +9,7 @@ class RuleCondition extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['rule_id', 'condition_type_id', 'condition_value'];
+    protected $fillable = ['rule_id', 'condition_type_id', 'condition_value', 'external_id'];
 
     protected $casts = [
         'condition_value' => 'json',
