@@ -49,6 +49,7 @@ jobs:
         run: |
             cp .env.example .env
             php artisan key:generate
+            php artisan migrate
         env:
           DB_CONNECTION: ${{ env.DB_CONNECTION }}
           DB_HOST: ${{ env.DB_HOST }}
