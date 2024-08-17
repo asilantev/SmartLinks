@@ -14,7 +14,7 @@ class FreezeSmartLinkService implements FreezeSmartLinkServiceInterface
     public function shouldSmartLinkBeFreezed(): bool
     {
         $smartLink = $this->repository->read();
-        if ($smartLink->getExpiresAt()->isPast()) {
+        if ($smartLink->getExpiresAt()?->isPast()) {
             return true;
         }
 

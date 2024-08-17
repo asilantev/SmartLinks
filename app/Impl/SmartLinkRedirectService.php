@@ -9,13 +9,15 @@ use App\Interfaces\RedirectRuleInterface;
 use App\Interfaces\RuleConditionInterface;
 use App\Interfaces\SmartLinkRedirectRulesRepositoryInterface;
 use App\Interfaces\SmartLinkRedirectServiceInterface;
+use App\Interfaces\StatableSmartLinkRepositoryInterface;
 use App\Models\RuleCondition;
 
 class SmartLinkRedirectService implements SmartLinkRedirectServiceInterface
 {
     public function __construct(
         private SmartLinkRedirectRulesRepositoryInterface $redirectRulesRepository,
-        private ConditionHandlerFactoryInterface $conditionHandlerFactory
+        private ConditionHandlerFactoryInterface $conditionHandlerFactory,
+        private StatableSmartLinkRepositoryInterface $smartLinkRepository
     )
     {
     }
@@ -41,6 +43,11 @@ class SmartLinkRedirectService implements SmartLinkRedirectServiceInterface
             } catch (ConditionRuleHandlerNotFoundException $e) {
             } catch (ConditionRuleHandlerProcessException $e) {
             }
+        }
+
+        if (empty($targetUrl)) {
+            $smartLink = $this->smartLinkRepository->read();
+            $targetUrl = $smartLink->getDefaultUrl();
         }
 
         return $targetUrl;

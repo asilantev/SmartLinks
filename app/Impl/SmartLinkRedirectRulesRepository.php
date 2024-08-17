@@ -20,9 +20,11 @@ class SmartLinkRedirectRulesRepository implements SmartLinkRedirectRulesReposito
         /** @var \App\Models\SmartLink $model */
         $model = $this->dbRepository->read();
         if ($model) {
-            $redirectRuleCollection = $model->redirectRules()->with('conditions')->get();
+            $redirectRuleCollection = $model->redirectRules()->orderBy('priority')->with('conditions')->get();
             foreach ($redirectRuleCollection as $redirectRule) {
-                $ruleCollection->add(app(RedirectRuleInterface::class, [$redirectRule]));
+                if ($redirectRule->is_active) {
+                    $ruleCollection->add(app(RedirectRuleInterface::class, [$redirectRule]));
+                }
             }
         }
 

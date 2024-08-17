@@ -18,7 +18,7 @@ class Response_307_TemporaryRedirect_Middleware
         $targetUrl = $this->smartLinkRedirectService->evaluate();
 
         if ($targetUrl) {
-            //return redirect($targetUrl);
+            return redirect($targetUrl);
         }
 
         return $next($request);

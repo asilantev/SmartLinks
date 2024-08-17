@@ -27,4 +27,9 @@ class StatableSmartLink implements StatableSmartLinkInterface
         $expiresAt = $this->model->expires_at;
         return $expiresAt ? Carbon::parse($expiresAt) : null;
     }
+
+    public function getDefaultUrl(): string
+    {
+        return (string)$this->model->default_url;
+    }
 }
