@@ -39,10 +39,6 @@ class RuleConditionFactory extends Factory
                 return json_encode([
                     'value' => $this->faker->randomElement(['Linux', 'Windows', 'MacOS']),
                 ]);
-            case 'device':
-                return json_encode([
-                    'type' => $this->faker->randomElement(['mobile', 'desktop', 'tablet']),
-                ]);
             case 'browser':
                 return json_encode([
                     'name' => $this->faker->randomElement(['Chrome', 'Firefox', 'Safari']),

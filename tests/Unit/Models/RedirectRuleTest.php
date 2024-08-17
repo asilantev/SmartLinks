@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\RedirectLog;
+use App\Models\ConditionType;
 use App\Models\RedirectRule;
 use App\Models\RuleCondition;
 use App\Models\SmartLink;
@@ -12,6 +12,14 @@ use Tests\TestCase;
 class RedirectRuleTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        ConditionType::factory()->create(['code' => 'platform']);
+        ConditionType::factory()->create(['code' => 'browser']);
+    }
 
     public function test_create_redirect_rule()
     {
@@ -115,4 +123,5 @@ class RedirectRuleTest extends TestCase
         $this->assertEquals($rule1->id, $orderedRules[1]->id);
         $this->assertEquals($rule3->id, $orderedRules[2]->id);
     }
+
 }
