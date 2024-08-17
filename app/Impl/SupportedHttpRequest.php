@@ -26,4 +26,9 @@ class SupportedHttpRequest implements SupportedHttpRequestInterface
     {
         return trim($this->request->header('sec-ch-ua-platform'), '"');
     }
+
+    public function getBrowser(): string
+    {
+        return trim($this->request->header('sec-ch-ua'), '"');
+    }
 }
