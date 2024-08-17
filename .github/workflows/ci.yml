@@ -59,4 +59,4 @@ jobs:
           DB_PASSWORD: ${{ env.DB_PASSWORD }}
 
       - name: Run Tests
-        run: php artisan test
+        run: php artisan test --coverage --min=90
