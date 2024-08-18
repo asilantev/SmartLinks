@@ -17,7 +17,7 @@ class PlatformConditionCommand implements CommandInterface
      */
     public function execute(): void
     {
-        if ($this->request->getPlatform() !== $this->params->value) {
+        if (mb_strpos($this->request->getPlatform(), $this->params->value) === false) {
             throw new ConditionRuleHandlerProcessException();
         }
     }

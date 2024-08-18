@@ -16,9 +16,4 @@ class SmartLink extends Model
     {
         return $this->hasMany(RedirectRule::class);
     }
-
-    public function redirectLogs()
-    {
-        return $this->hasMany(RedirectLog::class);
-    }
 }

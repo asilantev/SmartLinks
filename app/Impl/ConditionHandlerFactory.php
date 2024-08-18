@@ -7,6 +7,7 @@ use App\Interfaces\CommandInterface;
 use App\Interfaces\ConditionHandlerFactoryInterface;
 use App\Interfaces\ConditionTypeInterface;
 use App\Interfaces\SupportedHttpRequestInterface;
+use function Widmogrod\Monad\Control\Doo\in;
 
 class ConditionHandlerFactory implements ConditionHandlerFactoryInterface
 {
@@ -26,10 +27,15 @@ class ConditionHandlerFactory implements ConditionHandlerFactoryInterface
         $className = ltrim($className, '\\0..9');
 
         $fullNameClass = app('Namespace.ConditionHandlers') . "{$className}ConditionCommand";
-        if (!class_exists($fullNameClass)) {
-            throw new ConditionRuleHandlerNotFoundException("Condition handler $fullNameClass does not exist");
-        }
+        $this->checkClassExists($fullNameClass);
 
         return new $fullNameClass($params, $this->request);
+    }
+
+    private function checkClassExists(string $className): void
+    {
+        if (!class_exists($className)) {
+            throw new ConditionRuleHandlerNotFoundException("Condition handler $className does not exist");
+        }
     }
 }

@@ -2,15 +2,14 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\RedirectLog;
 use App\Models\RedirectRule;
 use App\Models\SmartLink;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
 class SmartLinkTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     public function test_create_smart_link()
     {
@@ -64,15 +63,6 @@ class SmartLinkTest extends TestCase
 
         $this->assertTrue($smartLink->redirectRules->contains($redirectRule));
         $this->assertInstanceOf(RedirectRule::class, $smartLink->redirectRules->first());
-    }
-
-    public function test_smart_link_redirect_logs_relationship()
-    {
-        $smartLink = SmartLink::factory()->create();
-        $redirectLog = RedirectLog::factory()->create(['smart_link_id' => $smartLink->id]);
-
-        $this->assertTrue($smartLink->redirectLogs->contains($redirectLog));
-        $this->assertInstanceOf(RedirectLog::class, $smartLink->redirectLogs->first());
     }
 
     public function test_smart_link_expires_at_attribute()

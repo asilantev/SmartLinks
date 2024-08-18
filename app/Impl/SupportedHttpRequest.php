@@ -24,11 +24,11 @@ class SupportedHttpRequest implements SupportedHttpRequestInterface
 
     public function getPlatform(): string
     {
-        return trim($this->request->header('sec-ch-ua-platform'), '"');
+        return trim($this->request->header('user-agent'), '"');
     }
 
     public function getBrowser(): string
     {
-        return trim($this->request->header('sec-ch-ua'), '"');
+        return trim($this->request->header('user-agent'), '"');
     }
 }

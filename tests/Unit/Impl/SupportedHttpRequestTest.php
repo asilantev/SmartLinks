@@ -49,6 +49,60 @@ class SupportedHttpRequestTest extends TestCase
         $this->assertSame($this->requestMock, $this->supportedHttpRequest->getRequest());
     }
 
+    public function test_get_platform()
+    {
+        $testCases = [
+            ['header' => 'Windows', 'expected' => 'Windows'],
+            ['header' => '"macOS"', 'expected' => 'macOS'],
+            ['header' => '"Android"', 'expected' => 'Android'],
+            ['header' => '"iOS"', 'expected' => 'iOS'],
+            ['header' => '', 'expected' => ''],
+        ];
+
+        foreach ($testCases as $case) {
+            $request = new Request();
+            $request->headers->set('user-agent', $case['header']);
+
+            $supportedRequest = new SupportedHttpRequest($request);
+
+            $this->assertEquals($case['expected'], $supportedRequest->getPlatform(), "Failed asserting that platform '{$case['header']}' is correctly parsed.");
+        }
+    }
+
+    public function test_get_browser()
+    {
+        $testCases = [
+            ['header' => '"Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"', 'expected' => 'Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110'],
+            ['header' => '"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"', 'expected' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'],
+            ['header' => '', 'expected' => ''],
+        ];
+
+        foreach ($testCases as $case) {
+            $request = new Request();
+            $request->headers->set('user-agent', $case['header']);
+
+            $supportedRequest = new SupportedHttpRequest($request);
+
+            $this->assertEquals($case['expected'], $supportedRequest->getBrowser(), "Failed asserting that browser '{$case['header']}' is correctly parsed.");
+        }
+    }
+
+    public function test_get_platform_with_missing_header()
+    {
+        $request = new Request();
+        $supportedRequest = new SupportedHttpRequest($request);
+
+        $this->assertEquals('', $supportedRequest->getPlatform(), "Failed asserting that missing platform header returns empty string.");
+    }
+
+    public function test_get_browser_with_missing_header()
+    {
+        $request = new Request();
+        $supportedRequest = new SupportedHttpRequest($request);
+
+        $this->assertEquals('', $supportedRequest->getBrowser(), "Failed asserting that missing browser header returns empty string.");
+    }
+
     protected function tearDown(): void
     {
         Mockery::close();

@@ -21,7 +21,7 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
-            - smartlinkkafka_default
+            - kafka_network
         depends_on:
             - mysql
             - redis
@@ -112,7 +112,7 @@ services:
 networks:
     sail:
         driver: bridge
-    smartlinkkafka_default:
+    kafka_network:
         external: true
 volumes:
     sail-mysql:

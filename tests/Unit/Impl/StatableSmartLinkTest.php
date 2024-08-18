@@ -68,6 +68,15 @@ class StatableSmartLinkTest extends TestCase
         $this->assertNull($result);
     }
 
+    public function test_get_default_url()
+    {
+        $expectedDefaultUrl = 'http://test.ru';
+        $this->modelMock->shouldReceive('getAttribute')->once()->with('default_url')->andReturn($expectedDefaultUrl);
+        $result = $this->statableSmartLink->getDefaultUrl();
+
+        $this->assertEquals($expectedDefaultUrl, $result);
+    }
+
     protected function tearDown(): void
     {
         Mockery::close();
